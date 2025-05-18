@@ -3,21 +3,43 @@
 
 Console.Clear();
 
+decimal salarioHoraBase, salario;
+int horasTrabalhadas, numeroHorasExtras;
+
 Console.WriteLine("Cálculo de salário-hora com horas extras");
 Console.WriteLine();
+
+// Solicitar os dados do usuário
 Console.Write("Digite seu salário-hora: ");
-double salario = double.Parse(Console.ReadLine()!);
+salarioHoraBase = decimal.Parse(Console.ReadLine()!);
 
 Console.Write("Digite o total de horas trabalhadas: ");
-double horasTrabalhadas = double.Parse(Console.ReadLine()!);
+horasTrabalhadas = int.Parse(Console.ReadLine()!);
 
 Console.Write("Digite o total de horas extras feitas: ");
-double horasExtras = double.Parse(Console.ReadLine()!);
+numeroHorasExtras = int.Parse(Console.ReadLine()!);
 
-double pagamentoExtras = (salario * 0.4) * horasExtras;
-double pagamentoNormal = salario * horasTrabalhadas;
-double salarioTotal = pagamentoNormal + pagamentoExtras;
+ // Executar função CalculaSalario
+salario = CalculaSalario(salarioHoraBase, horasTrabalhadas, numeroHorasExtras);
 
+// Função que calcula o salário total
+decimal CalculaSalario(decimal salarioHoraBase, int horasTrabalhadas, int numeroHorasExtras)
+{
+    decimal salarioTotal;
+
+    if (numeroHorasExtras > 0)
+    {
+        decimal valorHoraExtra = salarioHoraBase * 1.4m;
+        salarioTotal = (salarioHoraBase * horasTrabalhadas) + (valorHoraExtra * numeroHorasExtras);
+    }
+    else
+    {
+        salarioTotal = salarioHoraBase * horasTrabalhadas;
+    }
+    return salarioTotal;
+}
+
+// Exibir os resultados
 Console.WriteLine();
-Console.WriteLine($"Salário total: {salarioTotal:F1}");
-Console.WriteLine($"Pago nas horas extras: {pagamentoExtras:F1}");
+Console.WriteLine($"Salário total: {salario:C2}");
+Console.WriteLine($"Pago nas horas extras: {(numeroHorasExtras > 0 ? (salarioHoraBase * 1.4m * numeroHorasExtras).ToString("C2") : "0.0")}");
